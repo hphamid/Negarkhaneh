@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="title_background">#99eeeeee</color>
+    <color name="title_background">#33eeeeee</color>
+    <color name="black">#000000</color>
     <color name="image_background">#99eeeeee</color>
     <color name="transparent">#00000000</color>
 </resources>

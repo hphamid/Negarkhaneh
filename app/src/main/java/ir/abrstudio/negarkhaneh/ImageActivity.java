@@ -32,16 +32,17 @@ public class ImageActivity extends Activity {
     private ImageButton wallpaper;
     private ImageButton download;
     private TextView title;
-    private String imageTitle = "image";
+    private Image image;
 
     private class Download implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            File f = new File(Environment.getExternalStorageDirectory() + File.separator + "negar-" + imageTitle + ".jpg");
+            File f = new File(Environment.getExternalStorageDirectory() + File.separator + "negar-" + image.getImageTitle() + ".jpg");
             Bitmap image = ((BitmapDrawable)backgroundImage.getDrawable()).getBitmap();
             compressAndSaveImage(f, image);
             addImageToGallery(v.getContext().getContentResolver(),"jpg", f);
+            Toast.makeText(v.getContext(), "Saved to Gallery", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -63,7 +64,7 @@ public class ImageActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            share.putExtra(Intent.EXTRA_STREAM, Uri.parse(Environment.getExternalStorageDirectory() +
+            share.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + Environment.getExternalStorageDirectory() +
                     File.separator + "temporary_file.jpg"));
             startActivity(Intent.createChooser(share, "Share Image"));
         }
@@ -89,7 +90,6 @@ public class ImageActivity extends Activity {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(getApplicationContext(), "about to set as background image", Toast.LENGTH_SHORT).show();
             WallpaperManager wm = WallpaperManager.getInstance(getApplicationContext());
             Bitmap image = ((BitmapDrawable)backgroundImage.getDrawable()).getBitmap();
             try {
@@ -97,6 +97,7 @@ public class ImageActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            Toast.makeText(getApplicationContext(), "Done!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -130,6 +131,7 @@ public class ImageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
+        this.image = (Image) getIntent().getExtras().get("image");
         findViewItems();
         setListeners();
         setContents();
@@ -152,8 +154,8 @@ public class ImageActivity extends Activity {
     }
 
     private void setContents() {
-        title.setText(imageTitle);
-        Glide.with(this).load(R.drawable.background).asBitmap().centerCrop().into(backgroundImage);
+        title.setText(image.getImageTitle());
+        Glide.with(this).load(image.getImageAddress()).asBitmap().centerCrop().into(backgroundImage);
     }
 
 }
