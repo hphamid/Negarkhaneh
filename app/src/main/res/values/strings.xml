@@ -4,5 +4,8 @@
     <string name="app_name">نگارخانه</string>
     <string name="title_string">عکس</string>
     <string name="action_settings">Settings</string>
-
+    <string name="news">تازه‌ها</string>
+    <string name="top">محبوب‌ترین‌ها</string>
+    <string name="liked">مورد علاقه</string>
+	
 </resources>
